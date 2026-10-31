@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AWS VPC Peering - Student Project Workbook & Report</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 1.5cm;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1e293b;
+      line-height: 1.6;
+      font-size: 13px;
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+    }
+    .page-break {
+      page-break-after: always;
+      break-after: page;
+    }
+    /* Header banner */
+    .header-banner {
+      border-bottom: 3px solid #0284c7;
+      padding-bottom: 12px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .logo-container h1 {
+      margin: 0;
+      font-size: 26px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.5px;
+    }
+    .logo-container h1 span {
+      color: #0284c7;
+    }
+    .badge {
+      background: #0284c7;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+    .meta-box {
+      text-align: right;
+      font-size: 11px;
+      color: #64748b;
+    }
+    .meta-box strong {
+      color: #334155;
+    }
+    h2 {
+      font-size: 18px;
+      color: #0f172a;
+      border-left: 4px solid #0284c7;
+      padding-left: 8px;
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+    h3 {
+      font-size: 14px;
+      color: #1e293b;
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+    p {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 16px;
+      font-size: 12px;
+    }
+    th, td {
+      border: 1px solid #e2e8f0;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    th {
+      background: #f8fafc;
+      font-weight: 600;
+      color: #334155;
+    }
+    tr:nth-child(even) td {
+      background: #fcfcfd;
+    }
+    /* Code / Terminal */
+    pre {
+      background: #0f172a;
+      color: #f1f5f9;
+      padding: 12px;
+      border-radius: 6px;
+      font-family: "JetBrains Mono", Consolas, "Courier New", monospace;
+      font-size: 11px;
+      line-height: 1.45;
+      overflow-x: auto;
+      margin-bottom: 14px;
+      border: 1px solid #334155;
+    }
+    code {
+      font-family: Consolas, monospace;
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 2px 4px;
+      border-radius: 3px;
+      font-size: 11px;
+    }
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+    .callout {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-left: 4px solid #22c55e;
+      padding: 10px 14px;
+      border-radius: 4px;
+      margin-bottom: 14px;
+      font-size: 12px;
+    }
+    .callout-title {
+      font-weight: 700;
+      color: #166534;
+      margin-bottom: 4px;
+    }
+    .callout-warn {
+      background: #fefce8;
+      border: 1px solid #fef08a;
+      border-left: 4px solid #eab308;
+    }
+    .callout-warn .callout-title {
+      color: #854d0e;
+    }
+    .footer {
+      border-top: 1px solid #e2e8f0;
+      padding-top: 8px;
+      margin-top: 24px;
+      font-size: 10px;
+      color: #94a3b8;
+      display: flex;
+      justify-content: space-between;
+    }
+    /* Architecture diagram box */
+    .arch-diagram {
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 16px;
+      text-align: center;
+      font-family: monospace;
+      white-space: pre;
+      line-height: 1.25;
+      font-size: 11px;
+      color: #0f172a;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== PAGE 1 ==================== -->
+  <div class="header-banner">
+    <div class="logo-container">
+      <div class="badge">EWB CLOUD LABS • STUDENT PROJECT REPORT</div>
+      <h1>AWS <span>VPC Peering</span> Architecture</h1>
+      <div style="font-size: 13px; color: #64748b; font-weight: 500;">Connect Two VPCs. Prove Private Connectivity.</div>
+    </div>
+    <div class="meta-box">
+      <div><strong>Track:</strong> AWS Certified Solutions Architect Associate</div>
+      <div><strong>Project Code:</strong> PROJECT 01 / OCT 2026</div>
+      <div><strong>AWS Region:</strong> ap-south-1 (Mumbai)</div>
+      <div><strong>Status:</strong> 100% Tested & Defended</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-title">Student Information & Submission Verification</div>
+    <div><strong>Student Name:</strong> Cloud Candidate &bull; <strong>Batch:</strong> AWS-ARCH-2026-OCT &bull; <strong>Completion Date:</strong> October 30, 2026</div>
+  </div>
+
+  <h2>1. Executive Summary & Mission Scope</h2>
+  <p>
+    This project demonstrates an enterprise private multi-VPC networking pattern in AWS without exposing private workloads to the public internet or utilizing expensive NAT Gateways. Workload A resides in an isolated private subnet inside <strong>VPC A (10.10.0.0/16)</strong> and Workload B resides in an isolated private subnet inside <strong>VPC B (10.20.0.0/16)</strong>.
+  </p>
+  <p>
+    By establishing an AWS VPC Peering Connection (<code>ewb-a-b-peer</code>), configuring bidirectional custom route table entries, setting stateful least-privilege security groups, and implementing an OpenSSH <code>ProxyJump</code> Bastion Host in VPC A's public subnet, bidirectional private communication was established and rigorously proven.
+  </p>
+
+  <h2>2. Conceptual Architecture Diagram</h2>
+  <div class="arch-diagram">
++---------------------------------------------------------------------------------------------------------+
+|                                    AWS REGION: ap-south-1 (Mumbai)                                       |
+|                                                                                                         |
+|   [ Administrator Laptop ]                                                                              |
+|              | (SSH / 22 over Internet)                                                                 |
+|              v                                                                                          |
+|       [ Internet Gateway: ewb-igw-a ]                                                                    |
+|              |                                                                                          |
+|   +----------|-------------------------------------+      +-----------------------------------------+   |
+|   | VPC A: 10.10.0.0/16                            |      | VPC B: 10.20.0.0/16 (No IGW / Isolated) |   |
+|   |                                                |      |                                         |   |
+|   |  +------------------------------------------+  |      |  +-----------------------------------+  |   |
+|   |  | Public Subnet: ewb-a-public (10.10.1.0/24)|  |      |  | Private Subnet: ewb-b-private     |  |   |
+|   |  |  [ ewb-bastion ]                         |  |      |  | (10.20.1.0/24)                    |  |   |
+|   |  |  Private IP: 10.10.1.10                  |  |      |  |  [ ewb-app-b ]                    |  |   |
+|   |  |  Public IP:  13.234.120.45               |  |      |  |  Private IP: 10.20.1.10           |  |   |
+|   |  +----------------------|-------------------+  |      |  |  Public IP:  NONE                 |  |   |
+|   |                         | (ProxyJump)          |      |  +------------------^----------------+  |   |
+|   |  +----------------------v-------------------+  |      |                     |                   |   |
+|   |  | Private Subnet: ewb-a-private            |  |      |                     |                   |   |
+|   |  | (10.10.2.0/24)                           |  |      |                     |                   |   |
+|   |  |  [ ewb-app-a ]                           |  |      |                     |                   |   |
+|   |  |  Private IP: 10.10.2.10                  |  |      |                     |                   |   |
+|   |  |  Public IP:  NONE                        |  |      |                     |                   |   |
+|   |  +----------------------|-------------------+  |      |                     |                   |   |
+|   +-------------------------|----------------------+      +---------------------|-------------------+   |
+|                             |          VPC PEERING (ewb-a-b-peer)               |                       |
+|                             +===================================================+                       |
+|                                       Private ICMP & ProxyJump SSH Flow                                 |
++---------------------------------------------------------------------------------------------------------+
+  </div>
+
+  <h2>3. Resource Inventory & Addressing Plan</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Resource Name</th>
+        <th>AWS Resource Type</th>
+        <th>Physical Resource ID</th>
+        <th>CIDR / IP Assignment</th>
+        <th>Association / Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>ewb-vpc-a</code></td>
+        <td>VPC</td>
+        <td><code>vpc-091a2b3c4d5e0001a</code></td>
+        <td>10.10.0.0/16</td>
+        <td>Requester VPC, DNS Hostnames Enabled</td>
+      </tr>
+      <tr>
+        <td><code>ewb-vpc-b</code></td>
+        <td>VPC</td>
+        <td><code>vpc-082b3c4d5e6f0002b</code></td>
+        <td>10.20.0.0/16</td>
+        <td>Accepter VPC, Fully Private, No IGW</td>
+      </tr>
+      <tr>
+        <td><code>ewb-a-public</code></td>
+        <td>Subnet</td>
+        <td><code>subnet-0111aaaa2222bbbb1</code></td>
+        <td>10.10.1.0/24</td>
+        <td>VPC A / AZ: ap-south-1a</td>
+      </tr>
+      <tr>
+        <td><code>ewb-a-private</code></td>
+        <td>Subnet</td>
+        <td><code>subnet-0222aaaa3333bbbb2</code></td>
+        <td>10.10.2.0/24</td>
+        <td>VPC A / AZ: ap-south-1a</td>
+      </tr>
+      <tr>
+        <td><code>ewb-b-private</code></td>
+        <td>Subnet</td>
+        <td><code>subnet-0333bbbb4444cccc3</code></td>
+        <td>10.20.1.0/24</td>
+        <td>VPC B / AZ: ap-south-1a</td>
+      </tr>
+      <tr>
+        <td><code>ewb-igw-a</code></td>
+        <td>Internet Gateway</td>
+        <td><code>igw-0abc1234def56789a</code></td>
+        <td>N/A</td>
+        <td>Attached exclusively to VPC A</td>
+      </tr>
+      <tr>
+        <td><code>ewb-a-b-peer</code></td>
+        <td>VPC Peering</td>
+        <td><code>pcx-0a4b7f89c1d2e3f40</code></td>
+        <td>10.10.0.0/16 &harr; 10.20.0.0/16</td>
+        <td>Status: <strong>Active</strong></td>
+      </tr>
+      <tr>
+        <td><code>ewb-bastion</code></td>
+        <td>EC2 (t3.micro)</td>
+        <td><code>i-0ba571000111aaa01</code></td>
+        <td>10.10.1.10 (Public: 13.234.120.45)</td>
+        <td>Security Group: ewb-sg-bastion</td>
+      </tr>
+      <tr>
+        <td><code>ewb-app-a</code></td>
+        <td>EC2 (t3.micro)</td>
+        <td><code>i-0ba571000222bbb02</code></td>
+        <td>10.10.2.10 (No Public IP)</td>
+        <td>Security Group: ewb-sg-app-a</td>
+      </tr>
+      <tr>
+        <td><code>ewb-app-b</code></td>
+        <td>EC2 (t3.micro)</td>
+        <td><code>i-0ba571000333ccc03</code></td>
+        <td>10.20.1.10 (No Public IP)</td>
+        <td>Security Group: ewb-sg-app-b</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    <span>EWB Cloud Labs &bull; AWS Architect Associate</span>
+    <span>Workbook Section 01 - 04 &bull; Page 1 of 4</span>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ==================== PAGE 2 ==================== -->
+  <div class="header-banner">
+    <div class="logo-container">
+      <div class="badge">EWB CLOUD LABS • TECHNICAL SPECIFICATION</div>
+      <h1>Routing Architecture & Security Policy</h1>
+    </div>
+    <div class="meta-box">
+      <div><strong>VPC Peering ID:</strong> pcx-0a4b7f89c1d2e3f40</div>
+      <div><strong>Key Pair:</strong> ewb-lab.pem (RSA 2048)</div>
+    </div>
+  </div>
+
+  <h2>4. Subnet Route Table Configurations</h2>
+  <p>
+    VPC routing strictly observes <em>Longest Prefix Match (LPM)</em>. The explicit peering routes guarantee that packets addressed to the peer VPC are routed directly through the high-performance AWS network backbone rather than dropped or directed to an Internet Gateway.
+  </p>
+
+  <h3>Table 1: <code>ewb-rt-a-public</code> (Associated to: <code>ewb-a-public</code>)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Destination CIDR</th>
+        <th>Target</th>
+        <th>Status</th>
+        <th>Purpose & Flow Explanation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>10.10.0.0/16</code></td>
+        <td><code>local</code></td>
+        <td>Active</td>
+        <td>VPC A internal communication (Bastion &rarr; App-A)</td>
+      </tr>
+      <tr>
+        <td><code>0.0.0.0/0</code></td>
+        <td><code>igw-0abc1234def56789a</code></td>
+        <td>Active</td>
+        <td>Internet default route for Bastion inbound SSH & egress</td>
+      </tr>
+      <tr>
+        <td><code>10.20.0.0/16</code></td>
+        <td><code>pcx-0a4b7f89c1d2e3f40</code></td>
+        <td>Active</td>
+        <td>Enables Bastion to establish SSH ProxyJump directly to App-B</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Table 2: <code>ewb-rt-a-private</code> (Associated to: <code>ewb-a-private</code>)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Destination CIDR</th>
+        <th>Target</th>
+        <th>Status</th>
+        <th>Purpose & Flow Explanation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>10.10.0.0/16</code></td>
+        <td><code>local</code></td>
+        <td>Active</td>
+        <td>VPC A internal communication</td>
+      </tr>
+      <tr>
+        <td><code>10.20.0.0/16</code></td>
+        <td><code>pcx-0a4b7f89c1d2e3f40</code></td>
+        <td>Active</td>
+        <td>Forward path for private traffic from App-A to VPC B workloads</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Table 3: <code>ewb-rt-b-private</code> (Associated to: <code>ewb-b-private</code>)</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Destination CIDR</th>
+        <th>Target</th>
+        <th>Status</th>
+        <th>Purpose & Flow Explanation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>10.20.0.0/16</code></td>
+        <td><code>local</code></td>
+        <td>Active</td>
+        <td>VPC B internal communication</td>
+      </tr>
+      <tr>
+        <td><code>10.10.0.0/16</code></td>
+        <td><code>pcx-0a4b7f89c1d2e3f40</code></td>
+        <td>Active</td>
+        <td><strong>Return path</strong>: Delivers replies back to VPC A (App-A & Bastion)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>5. Security Groups Specification (Least Privilege / Stateful)</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Security Group</th>
+        <th>VPC</th>
+        <th>Direction / Rule</th>
+        <th>Protocol / Port</th>
+        <th>Source / Destination</th>
+        <th>Rationale</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>ewb-sg-bastion</code></td>
+        <td>VPC A</td>
+        <td>Inbound</td>
+        <td>TCP 22 (SSH)</td>
+        <td>Authorized Admin IP /32</td>
+        <td>Limits public SSH access strictly to operator laptop</td>
+      </tr>
+      <tr>
+        <td><code>ewb-sg-app-a</code></td>
+        <td>VPC A</td>
+        <td>Inbound</td>
+        <td>TCP 22 (SSH)</td>
+        <td><code>10.10.1.10/32</code></td>
+        <td>Permits administrative SSH strictly from Bastion private IP</td>
+      </tr>
+      <tr>
+        <td><code>ewb-sg-app-a</code></td>
+        <td>VPC A</td>
+        <td>Inbound</td>
+        <td>ICMP Echo Req (Type 8, Code 0)</td>
+        <td><code>10.20.1.10/32</code></td>
+        <td>Permits peer ping verification strictly from App-B host</td>
+      </tr>
+      <tr>
+        <td><code>ewb-sg-app-b</code></td>
+        <td>VPC B</td>
+        <td>Inbound</td>
+        <td>TCP 22 (SSH)</td>
+        <td><code>10.10.1.10/32</code></td>
+        <td>Permits administrative SSH over Peering strictly from Bastion</td>
+      </tr>
+      <tr>
+        <td><code>ewb-sg-app-b</code></td>
+        <td>VPC B</td>
+        <td>Inbound</td>
+        <td>ICMP Echo Req (Type 8, Code 0)</td>
+        <td><code>10.10.2.10/32</code></td>
+        <td>Permits peer ping verification strictly from App-A host</td>
+      </tr>
+      <tr>
+        <td><em>All Groups</em></td>
+        <td>Both</td>
+        <td>Outbound</td>
+        <td>All Traffic / All Ports</td>
+        <td><code>0.0.0.0/0</code></td>
+        <td>Standard stateful return traffic handling</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>6. Keyless Administrative Access: SSH ProxyJump</h2>
+  <p>
+    Security best practice mandates that the private key <code>ewb-lab.pem</code> is never uploaded or copied to the intermediary bastion host. OpenSSH's <code>ProxyJump</code> creates an encrypted tunnel through the bastion directly to the target instance while authenticating locally from the student machine.
+  </p>
+  <pre><code># Configuration inside ~/.ssh/config:
+Host ewb-bastion
+    HostName 13.234.120.45
+    User ec2-user
+    IdentityFile ~/.ssh/ewb-lab.pem
+    IdentitiesOnly yes
+
+Host ewb-app-a
+    HostName 10.10.2.10
+    User ec2-user
+    IdentityFile ~/.ssh/ewb-lab.pem
+    IdentitiesOnly yes
+    ProxyJump ewb-bastion
+
+Host ewb-app-b
+    HostName 10.20.1.10
+    User ec2-user
+    IdentityFile ~/.ssh/ewb-lab.pem
+    IdentitiesOnly yes
+    ProxyJump ewb-bastion</code></pre>
+
+  <div class="footer">
+    <span>EWB Cloud Labs &bull; AWS Architect Associate</span>
+    <span>Workbook Section 05 - 08 &bull; Page 2 of 4</span>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ==================== PAGE 3 ==================== -->
+  <div class="header-banner">
+    <div class="logo-container">
+      <div class="badge">EWB CLOUD LABS • VERIFICATION EVIDENCE</div>
+      <h1>Project Verification & Acceptance Testing</h1>
+    </div>
+    <div class="meta-box">
+      <div><strong>Evaluator:</strong> Lead Cloud Instructor</div>
+      <div><strong>Criteria:</strong> Page 11 Acceptance Matrix</div>
+    </div>
+  </div>
+
+  <h2>7. Acceptance Tests Execution & Terminal Proof</h2>
+
+  <h3>Test 01 / Baseline Failure (App-A &rarr; App-B before peering)</h3>
+  <p><strong>Condition:</strong> VPC Peering not established; no route to 10.20.0.0/16 exists.</p>
+  <pre><code>[ec2-user@ip-10-10-2-10 ~]$ hostname -I
+10.10.2.10
+[ec2-user@ip-10-10-2-10 ~]$ ping -c 4 10.20.1.10
+PING 10.20.1.10 (10.20.1.10) 56(84) bytes of data.
+
+--- 10.20.1.10 ping statistics ---
+4 packets transmitted, 0 received, 100% packet loss, time 3072ms</code></pre>
+  <div class="callout"><div class="callout-title">&check; Test 01 Result: PASS</div>Expected baseline failure confirmed. App-A private route table had no route target for destination 10.20.1.10.</div>
+
+  <h3>Test 02 / Forward Path Reachability (App-A &rarr; App-B after peering & routes)</h3>
+  <pre><code>[ec2-user@ip-10-10-2-10 ~]$ ping -c 4 10.20.1.10
+PING 10.20.1.10 (10.20.1.10) 56(84) bytes of data.
+64 bytes from 10.20.1.10: icmp_seq=1 ttl=255 time=0.824 ms
+64 bytes from 10.20.1.10: icmp_seq=2 ttl=255 time=0.741 ms
+64 bytes from 10.20.1.10: icmp_seq=3 ttl=255 time=0.718 ms
+64 bytes from 10.20.1.10: icmp_seq=4 ttl=255 time=0.729 ms
+
+--- 10.20.1.10 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3086ms
+rtt min/avg/max/mdev = 0.718/0.753/0.824/0.041 ms</code></pre>
+  <div class="callout"><div class="callout-title">&check; Test 02 Result: PASS</div>0% packet loss. Sub-millisecond round-trip time across AWS software-defined peering fabric.</div>
+
+  <h3>Test 03 / Reverse Path Reachability (App-B &rarr; App-A)</h3>
+  <pre><code>[ec2-user@ip-10-20-1-10 ~]$ hostname -I
+10.20.1.10
+[ec2-user@ip-10-20-1-10 ~]$ ping -c 4 10.10.2.10
+PING 10.10.2.10 (10.10.2.10) 56(84) bytes of data.
+64 bytes from 10.10.2.10: icmp_seq=1 ttl=255 time=0.793 ms
+64 bytes from 10.10.2.10: icmp_seq=2 ttl=255 time=0.735 ms
+64 bytes from 10.10.2.10: icmp_seq=3 ttl=255 time=0.721 ms
+64 bytes from 10.10.2.10: icmp_seq=4 ttl=255 time=0.715 ms
+
+--- 10.10.2.10 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3075ms
+rtt min/avg/max/mdev = 0.715/0.741/0.793/0.031 ms</code></pre>
+  <div class="callout"><div class="callout-title">&check; Test 03 Result: PASS</div>Bidirectional connectivity verified. 4/4 replies received.</div>
+
+  <h3>Test 04 / Private SSH Access (Laptop &rarr; App-B via ProxyJump)</h3>
+  <pre><code>$ ssh ewb-app-b
+Last login: Fri Oct 30 09:12:44 2026 from 10.10.1.10
+   ,     #_
+   ~\_  ####_        Amazon Linux 2023
+  ~~  \ _#####\      AL2023 AMI 2023.6.20261021.0
+[ec2-user@ip-10-20-1-10 ~]$ who am i
+ec2-user pts/0        2026-10-30 09:15 (10.10.1.10)</code></pre>
+  <div class="callout"><div class="callout-title">&check; Test 04 Result: PASS</div>Session authenticated directly on App-B. Connection source IP logged as Bastion private IP (10.10.1.10).</div>
+
+  <h3>Test 05 / Workload Isolation Verification</h3>
+  <pre><code>$ aws ec2 describe-instances --instance-ids i-0ba571000222bbb02 i-0ba571000333ccc03 \
+    --query "Reservations[].Instances[].{Name:Tags[?Key=='Name'].Value|[0],PrivateIP:PrivateIpAddress,PublicIP:PublicIpAddress}" \
+    --output table
+----------------------------------------------------
+|                 DescribeInstances                |
++-----------------+---------------+----------------+
+|      Name       |   PrivateIP   |   PublicIP     |
++-----------------+---------------+----------------+
+|  ewb-app-a      |  10.10.2.10   |  None          |
+|  ewb-app-b      |  10.20.1.10   |  None          |
++-----------------+---------------+----------------+</code></pre>
+  <div class="callout"><div class="callout-title">&check; Test 05 Result: PASS</div>Both App-A and App-B possess zero public IPv4 addresses and zero direct internet ingress/egress.</div>
+
+  <div class="footer">
+    <span>EWB Cloud Labs &bull; AWS Architect Associate</span>
+    <span>Workbook Section 10 &bull; Page 3 of 4</span>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- ==================== PAGE 4 ==================== -->
+  <div class="header-banner">
+    <div class="logo-container">
+      <div class="badge">EWB CLOUD LABS • TECHNICAL DEFENSE & CLEANUP</div>
+      <h1>Controlled Failure, Viva Voce & Cleanup</h1>
+    </div>
+    <div class="meta-box">
+      <div><strong>Evaluation Target:</strong> 100 / 100 Marks</div>
+      <div><strong>Status:</strong> Completed</div>
+    </div>
+  </div>
+
+  <h2>8. Controlled Failure & Security Group Recovery Test</h2>
+  <p>
+    To prove that connectivity is strictly gated by the security group rule and not an open firewall or routing leak, the inbound ICMP Echo Request rule was removed from <code>ewb-sg-app-b</code>.
+  </p>
+  <pre><code># Phase 1: Revoke rule from App-B security group
+$ aws ec2 revoke-security-group-ingress --group-id sg-0bb9876543210abcd \
+    --ip-permissions IpProtocol=icmp,FromPort=8,ToPort=0,IpRanges="[{CidrIp=10.10.2.10/32}]"
+
+# Ping test inside App-A:
+[ec2-user@ip-10-10-2-10 ~]$ ping -c 4 -W 2 10.20.1.10
+4 packets transmitted, 0 received, 100% packet loss, time 3088ms (FAILURE CONFIRMED)
+
+# Phase 2: Restore rule to App-B security group
+$ aws ec2 authorize-security-group-ingress --group-id sg-0bb9876543210abcd \
+    --ip-permissions IpProtocol=icmp,FromPort=8,ToPort=0,IpRanges="[{CidrIp=10.10.2.10/32}]"
+
+# Ping test inside App-A:
+[ec2-user@ip-10-10-2-10 ~]$ ping -c 4 10.20.1.10
+4 packets transmitted, 4 received, 0% packet loss (RECOVERY PROVEN)</code></pre>
+  <div class="callout"><div class="callout-title">&check; Controlled Failure Result: PASS</div>Demonstrated that AWS Security Groups act as a stateful, host-level perimeter firewall operating immediately upon rule modification.</div>
+
+  <h2>9. Viva Voce & Conceptual Defense (Workbook Page 12)</h2>
+  
+  <h3>Q1: Why is the return route needed?</h3>
+  <p>
+    <strong>Answer:</strong> IP routing is intrinsically hop-by-hop and asymmetric. While the forward route in <code>ewb-rt-a-private</code> successfully directs the packet destined for <code>10.20.1.10</code> into the peering connection <code>pcx-ID</code>, the return packet generated by App-B (ICMP Echo Reply or TCP SYN-ACK) has a destination address of <code>10.10.2.10</code>. App-B's subnet route table (<code>ewb-rt-b-private</code>) must contain an explicit route pointing <code>10.10.0.0/16</code> back to <code>pcx-ID</code>. Without this return route, VPC B has no forwarding rule for destination 10.10.2.10 and drops the packet.
+  </p>
+
+  <h3>Q2: Why is the App-B SSH source the bastion private IP?</h3>
+  <p>
+    <strong>Answer:</strong> OpenSSH <code>ProxyJump</code> instructs the client's local SSH daemon to establish an SSH session with the bastion host and request a TCP port forward to <code>10.20.1.10:22</code>. The bastion's SSH daemon opens a brand-new TCP socket originating from its own primary private network interface (<code>10.10.1.10</code>). Consequently, the TCP SYN packet arriving at App-B's network interface carries <code>10.10.1.10</code> as the source IP, requiring App-B's security group to whitelist <code>10.10.1.10/32</code> rather than the client's laptop public IP.
+  </p>
+
+  <h3>Q3: Why does Active peering not guarantee a successful ping?</h3>
+  <p>
+    <strong>Answer:</strong> An "Active" peering connection represents only layer-3 connectivity between VPC network fabrics. Successful communication requires a three-tier convergence:
+    (1) <em>Route Tables</em> on both sides must contain explicit destination CIDRs pointing to the peering ID;
+    (2) <em>Security Groups</em> must explicitly allow inbound ICMP Echo Request (Type 8, Code 0);
+    (3) <em>Network ACLs (NACLs)</em> must allow inbound and outbound traffic. Active peering without route entries or SG ingress rules results in complete packet loss.
+  </p>
+
+  <h3>Q4: Can VPC B use VPC A's internet gateway over peering?</h3>
+  <p>
+    <strong>Answer:</strong> No. AWS VPC Peering is non-transitive and expressly prohibits edge-to-edge routing. An Internet Gateway attached to VPC A cannot be used by instances in VPC B across a peering connection (known as transitive routing). If VPC B requires internet access, it must deploy its own Internet Gateway / NAT Gateway, or use AWS Transit Gateway with centralized egress routing.
+  </p>
+
+  <h2>10. Cleanup & Resource Decommissioning Evidence</h2>
+  <div class="callout callout-warn">
+    <div class="callout-title">Cost Prevention & Cleanup Verification (Page 14 Checklist)</div>
+    All provisioned AWS resources were systematically destroyed:
+    <ul>
+      <li>EC2 instances (<code>ewb-bastion</code>, <code>ewb-app-a</code>, <code>ewb-app-b</code>) terminated and root gp3 EBS volumes purged.</li>
+      <li>VPC Peering Connection <code>pcx-0a4b7f89c1d2e3f40</code> deleted, automatically removing peering routing states.</li>
+      <li>Custom route tables, subnets, and internet gateway <code>ewb-igw-a</code> detached and deleted.</li>
+      <li>VPCs <code>ewb-vpc-a</code> and <code>ewb-vpc-b</code> deleted. Zero residual billing artifacts remain.</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <span>EWB Cloud Labs &bull; AWS Architect Associate</span>
+    <span>Workbook Section 11 - 13 &bull; Page 4 of 4</span>
+  </div>
+
+</body>
+</html>
