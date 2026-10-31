@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 
 const htmlPath = path.resolve(__dirname, 'report_template.html');
-const pdfPath = path.resolve(__dirname, 'YourName_EWB_VPC_Peering.pdf');
+const pdfPath = path.resolve(__dirname, 'Prachi_EWB_VPC_Peering.pdf');
 
 // Paths to check for Edge browser executable
 const edgePaths = [

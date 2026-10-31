@@ -1,9 +1,9 @@
 # EWB Cloud Labs: AWS VPC Peering Project Report
-**Document Name:** `YourName_EWB_VPC_Peering.pdf` / `EWB_VPC_Peering_Report.md`  
+**Document Name:** `Prachi_EWB_VPC_Peering.pdf` / `EWB_VPC_Peering_Report.md`  
 **Course:** AWS Certified Solutions Architect Associate  
 **Workbook Project:** Project 01 / October 2026  
 **AWS Region:** `ap-south-1` (Mumbai)  
-**Student Name:** Candidate  
+**Student Name:** Prachi Menaria  
 **Evaluation Target:** 100 / 100 Marks  
 
 ---

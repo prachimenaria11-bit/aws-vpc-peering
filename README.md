@@ -36,7 +36,7 @@ aws-vpc-peering/
 ├── report/                          # Student Project Report Deliverable (Page 13 Checklist)
 │   ├── generate_pdf.js             # Node script to render the PDF report using headless Edge/Chrome
 │   ├── report_template.html        # Beautiful, publication-ready report formatted to EWB theme
-│   ├── YourName_EWB_VPC_Peering.pdf # Generated final PDF ready for submission!
+│   ├── Prachi_EWB_VPC_Peering.pdf # Generated final PDF ready for submission!
 │   └── EWB_VPC_Peering_Report.md   # Complete Markdown version of the submission report
 └── README.md                        # Master guide & documentation
 ```
@@ -116,12 +116,12 @@ terraform apply -auto-approve
 ### Method 3: AWS CLI / PowerShell Automation Script
 In PowerShell:
 ```powershell
-.\aws-cli\deploy.ps1 -Region "ap-south-1" -StudentName "YourName" -AdminCidr "<Your_IP>/32"
+.\aws-cli\deploy.ps1 -Region "ap-south-1" -StudentName "Prachi" -AdminCidr "<Your_IP>/32"
 ```
 Or in Bash / WSL:
 ```bash
 chmod +x aws-cli/deploy.sh
-./aws-cli/deploy.sh ap-south-1 "YourName" "<Your_IP>/32"
+./aws-cli/deploy.sh ap-south-1 "Prachi" "<Your_IP>/32"
 ```
 
 ---
@@ -201,7 +201,7 @@ Full terminal logs are available in [verification/test_evidence.md](verification
 ## 📄 Submission Deliverable
 
 The submission report required by Section 12 (Page 13) has been generated in two formats:
-- **Official Submission PDF:** [`report/YourName_EWB_VPC_Peering.pdf`](report/YourName_EWB_VPC_Peering.pdf)
+- **Official Submission PDF:** [`report/Prachi_EWB_VPC_Peering.pdf`](report/Prachi_EWB_VPC_Peering.pdf)
 - **Detailed Markdown Report:** [`report/EWB_VPC_Peering_Report.md`](report/EWB_VPC_Peering_Report.md)
 
 To regenerate the PDF at any time:

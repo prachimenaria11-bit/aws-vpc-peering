@@ -5,7 +5,7 @@
 set -euo pipefail
 
 REGION="${1:-ap-south-1}"
-STUDENT_NAME="${2:-Student}"
+STUDENT_NAME="${2:-Prachi}"
 ADMIN_CIDR="${3:-0.0.0.0/0}"
 
 echo "=========================================================="

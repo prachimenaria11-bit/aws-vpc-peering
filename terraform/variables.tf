@@ -13,7 +13,7 @@ variable "project_name" {
 variable "student_name" {
   description = "Student name for resource tagging"
   type        = string
-  default     = "Student"
+  default     = "Prachi"
 }
 
 variable "admin_cidr" {

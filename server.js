@@ -52,5 +52,5 @@ const server = http.createServer((req, res) => {
 server.listen(PORT, '127.0.0.1', () => {
   console.log(`[+] AWS VPC Peering Live Server running!`);
   console.log(`[+] Local URL: http://localhost:${PORT}`);
-  console.log(`[+] PDF Report: http://localhost:${PORT}/report/YourName_EWB_VPC_Peering.pdf`);
+  console.log(`[+] PDF Report: http://localhost:${PORT}/report/Prachi_EWB_VPC_Peering.pdf`);
 });

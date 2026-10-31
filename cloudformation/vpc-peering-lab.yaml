@@ -33,7 +33,7 @@ Parameters:
   StudentName:
     Type: String
     Description: Name of the student for tagging and deliverables
-    Default: Student
+    Default: Prachi
 
 Resources:
   # =========================================================================

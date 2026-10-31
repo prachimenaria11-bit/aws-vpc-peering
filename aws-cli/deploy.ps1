@@ -4,7 +4,7 @@
 
 param (
     [string]$Region = "ap-south-1",
-    [string]$StudentName = "Student",
+    [string]$StudentName = "Prachi",
     [string]$AdminCidr = "0.0.0.0/0"
 )
 
